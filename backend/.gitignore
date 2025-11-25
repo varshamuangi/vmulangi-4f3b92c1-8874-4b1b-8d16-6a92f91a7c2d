@@ -1,0 +1,83 @@
+# -------------------------------
+# OS / SYSTEM FILES
+# -------------------------------
+.DS_Store
+Thumbs.db
+
+# -------------------------------
+# VISUAL STUDIO / VSCODE
+# -------------------------------
+.vs/
+backend/.vs/
+frontend/.vs/
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# -------------------------------
+# NODE / BUILD FILES
+# -------------------------------
+node_modules/
+dist/
+build/
+tmp/
+temp/
+*.log
+
+# -------------------------------
+# ENVIRONMENT FILES
+# -------------------------------
+.env
+.env.local
+.env.*.local
+
+# -------------------------------
+# DATABASE FILES
+# SQLite databases (optional)
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# -------------------------------
+# LOGS
+# -------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# -------------------------------
+# TEST OUTPUT
+# -------------------------------
+coverage/
+.nyc_output/
+
+# -------------------------------
+# IDE FILES
+# -------------------------------
+.idea/
+.project
+.classpath
+.settings/
+*.sublime-workspace
+*.launch
+.c9/
+*.code-workspace
+
+# -------------------------------
+# REPORTS
+# -------------------------------
+report.*.json
+
+# -------------------------------
+# MISC
+# -------------------------------
+*.pid
+*.seed
+*.pid.lock
+pids
