@@ -17,20 +17,23 @@ export class SeedService {
     ) { }
 
     async run() {
-        const existingOrg = await this.organizationRepo.findOne({
+        // Create organization if not exists
+        let org = await this.organizationRepo.findOne({
             where: { id: 'demo-org' },
         });
 
-        if (!existingOrg) {
-            const org = this.organizationRepo.create({
+        if (!org) {
+            org = this.organizationRepo.create({
                 id: 'demo-org',
                 name: 'Demo Organization',
                 description: 'Auto seeded demo organization',
             });
+
             await this.organizationRepo.save(org);
             console.log('✔ Seeded organization');
         }
 
+        // Create admin user if not exists
         const existingAdmin = await this.userRepo.findOne({
             where: { id: 'demo-admin-1' },
         });
@@ -43,9 +46,10 @@ export class SeedService {
                 firstName: 'Admin',
                 lastName: 'User',
                 role: Role.ADMIN,
-                organizationId: 'demo-org',
+                organization: org,
                 isDemo: true,
             });
+
             await this.userRepo.save(admin);
             console.log('✔ Seeded admin user');
         }
