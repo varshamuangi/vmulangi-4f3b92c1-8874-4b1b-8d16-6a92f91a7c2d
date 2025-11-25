@@ -1,107 +1,126 @@
 🛡️ Secure Task Management System
+
 By Varsha Chandrahasareddy Mulangi
 
-A full-stack, role-based Task Management System built using NestJS, Angular, and SQLite, structured in a clean, modular workplace.
-This project demonstrates secure authentication, authorization, organization scoping, and RBAC-based task management—all wrapped inside a responsive modern UI.
+A secure, full-stack Task Management System built using NestJS, Angular, and SQLite, following the architecture, security, and RBAC requirements outlined in the TurboVets Full Stack Engineer Assessment.
+
+This project demonstrates real JWT authentication, service-layer RBAC enforcement, organization-level data scoping, and role-based task management, delivered through a clean, modular, and responsive UI.
 
 🚀 Features Overview
 🔐 Authentication & Authorization
 
-JWT-based login/logout
+Real JWT-based login/logout
 
-Secure password hashing (bcrypt)
+Secure password hashing using bcrypt
 
-Automatic user context injection via decorators
+User context automatically injected using decorators
 
-Auth guards + Role guards for all protected routes
+JwtAuthGuard + RolesGuard for protected routes
+
+Full session persistence on the frontend
 
 🏢 Organization Management
 
-Support for organization hierarchy (2-level)
+Two-level organization structure
 
-Users belong to exactly one organization
+Each user belongs to exactly one organization
 
-Owners/Admins can view tasks only within their org scope
+Tasks are automatically scoped by organization
+
+Owners/Admins only see tasks from their own org
 
 📝 Task Management
 
-Create, edit, delete tasks (with permission checks)
+Create, Edit, Delete tasks (with full permission checks)
 
-Priority, category, and status classification
+Priority, category, and status metadata
+
+Tracks creator + assigned user
 
 Organization-scoped visibility
 
-Tracks creator and assigned user
-
-Supports future drag-and-drop ordering
+Ready for future drag-and-drop Kanban view
 
 🕵️ Audit Logging
 
-Every sensitive action logged
+Logs sensitive actions:
 
-Includes: user actions, resources touched, metadata
+Login events
 
-🎨 Frontend UI (Angular + Tailwind)
+Task creation
+
+Task updates
+
+Task deletions
+
+Organization/user creation
+
+🎨 Angular Frontend (Angular 20 + Tailwind)
 
 Modern responsive dashboard
 
-JWT stored in browser localStorage
+Clean component structure
 
-Auto-attach Authorization header via HTTP interceptor
+Interceptor auto-attaches JWT
 
-Task listing, creation, and editing screens
+LocalStorage for session persistence
 
-Clean routing and reusable components
+Task listing, creation, editing UIs
 
 🧱 Tech Stack
-Backend – NestJS
+Backend (NestJS)
 
 NestJS Framework
 
 TypeORM + SQLite
 
-Passport + JWT Strategy
+Passport JWT Strategy
 
-Class-Validator / Class-Transformer
+Class-Validator & Class-Transformer
 
-bcrypt for hashing
+bcrypt for password hashing
 
-Frontend – Angular
+Modular, testable architecture
+
+Frontend (Angular)
 
 Angular 20
 
-Tailwind CSS
+TailwindCSS
 
-Router, Components, Signals
+Angular Router
 
-HTTP Client Interceptors
+Signals & Components
 
-Development
+HTTP interceptors
+
+Development & Tooling
 
 Node.js v18+
 
-NX-style modular architecture
-
 Prettier + ESLint
+
+NX-style modular architecture
 
 TypeScript everywhere
 
-📂 Project Structure (Monorepo-Inspired)
-backend/              NestJS API
-│── src/
-│   ├── auth/         Authentication module
-│   ├── users/        User management
-│   ├── organizations/ Organization hierarchy
-│   ├── tasks/        Task CRUD
-│   ├── audit-log/    Activity logging
-│   ├── common/       Shared enums & decorators
-│   ├── database/     TypeORM config
-│   └── main.ts       App bootstrap
-frontend/             Angular application
-│── src/app/
-│   ├── core/         Auth service, guards, interceptors
-│   ├── features/     Auth + Tasks pages
-│   └── shared/       Components
+📂 Project Structure
+backend/
+  src/
+    auth/         Authentication logic
+    users/        User management
+    organizations/ Organization hierarchy
+    tasks/        Task CRUD operations
+    audit-log/    Logging user actions
+    common/       Shared enums/decorators/guards
+    database/     TypeORM configuration
+    main.ts       App bootstrap
+
+frontend/
+  src/app/
+    core/         Auth services, guards, interceptor
+    features/     Login + Tasks UI
+    shared/       Shared components
 
 ⚙️ Setup Instructions
 1️⃣ Clone the Repository
@@ -109,133 +128,46 @@ git clone https://github.com/varshamuangi/vmulangi-4f3b92c1-8874-4b1b-8d16-6a92f
 cd vmulangi-4f3b92c1-8874-4b1b-8d16-6a92f91a7c2d
 
 2️⃣ Install Dependencies
-
-Backend:
-
+Backend
 cd backend
 npm install
 
-
-Frontend:
-
+Frontend
 cd ../frontend
 npm install
 
-🔧 Environment Variables
+3️⃣ Environment Variables
 
-Create backend/.env:
+Create a .env file inside /backend:
 
 DATABASE_URL=sqlite:./database.sqlite
 JWT_SECRET=super-secret-key
 JWT_EXPIRATION=24h
 PORT=3000
 
-▶️ Running the Apps
-Backend
+▶️ Running the Backend
 cd backend
 npm run start:dev
 
 
-Backend starts on:
+Backend runs at:
 👉 http://localhost:3000
 
-Frontend
+▶️ Running the Frontend
 cd frontend
 npm start
 
 
-Frontend starts on:
+Frontend runs at:
 👉 http://localhost:4200
 
-🗄 Database
+🗄 Database & Seed Data
 
-SQLite file is auto-generated (database.sqlite)
+SQLite is auto-generated at first startup (database.sqlite).
 
-TypeORM synchronize: true builds schema automatically
+TypeORM's synchronize: true builds schema automatically.
 
-A seed service auto-creates:
-
-Demo org
-
-Demo admin (admin@demo.com)
-
-Demo owner (owner@demo.com)
-
-🛂 Access Control
-Roles
-Role	Permissions
-OWNER	Full access, manage users/org, full CRUD
-ADMIN	Manage tasks, view all tasks
-VIEWER	Read-only access
-Organization Scoping
-
-Users only see tasks belonging to their own organization
-
-Protects cross-organizational access
-
-JWT Integration
-
-Server verifies token, binds user to request
-
-Angular interceptor attaches token automatically
-
-🧪 API Documentation
-🔐 POST /auth/login
-{
-  "email": "admin@demo.com",
-  "password": "admin123"
-}
-
-🔐 POST /auth/register
-{
-  "email": "user@example.com",
-  "password": "pass123",
-  "firstName": "John",
-  "lastName": "Doe",
-  "organizationId": "demo-org"
-}
-
-📋 POST /tasks
-
-(Create task)
-
-{
-  "title": "Finish Report",
-  "description": "Q4 Review",
-  "priority": "high",
-  "category": "work"
-}
-
-📄 GET /tasks
-
-Returns all tasks visible to user (based on org & role).
-
-✏️ PATCH /tasks/:id
-🗑 DELETE /tasks/:id
-🧠 Architecture & RBAC Strategy
-Decorators
-
-@CurrentUser() → Injects user from JWT
-
-@Roles() → Restrict endpoints to allowed roles
-
-Guards
-
-JwtAuthGuard → Checks authentication
-
-RolesGuard → Checks role permissions
-
-Audit Logging
-
-Logs every important action:
-
-User logins
-
-Task creation/edit/delete
-
-Org creation
-
-🌱 Seed Data (Auto-Inserted)
+Auto-created Seed Data:
 User	Email	Password	Role
 Demo Admin	admin@demo.com
 	admin123	ADMIN
@@ -247,27 +179,228 @@ Organization:
 id: demo-org
 name: Demo Organization
 
-📝 Video Walkthrough
-     
-     https://drive.google.com/file/d/1M7J1HXoj3hId_S8acjxcYlUIl7zAgxul/view?usp=sharing
+🛂 Access Control (RBAC)
+Roles
+Role	Permissions
+OWNER	Full access, org/user management, CRUD
+ADMIN	Manage tasks, view tasks in org
+VIEWER	Read-only access
+How RBAC is implemented
+
+@Roles() decorator → declares allowed roles
+
+RolesGuard → checks JSON Web Token role
+
+JwtAuthGuard → ensures authentication
+
+Service-layer logic → double-verifies:
+
+Role permissions
+
+Organization matching
+
+No cross-org access
+
+Viewer restrictions
+
+Organization Scoping
+
+Every task query filters by organizationId:
+
+where: { organizationId: currentUser.organizationId }
+
+Viewer Restrictions
+
+Viewer cannot:
+
+Create tasks
+
+Edit tasks
+
+Delete tasks
+
+Viewer modifying ANY resource triggers:
+
+403 Forbidden
+
+🧪 API Examples
+🔐 Login
+POST /auth/login
+{
+  "email": "admin@demo.com",
+  "password": "admin123"
+}
+
+➕ Register User
+POST /auth/register
+{
+  "email": "user@example.com",
+  "password": "pass123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "organizationId": "demo-org"
+}
+
+➕ Create Task
+POST /tasks
+{
+  "title": "Finish Report",
+  "description": "Q4 Review",
+  "priority": "high",
+  "category": "work"
+}
+
+📄 Get Tasks
+GET /tasks
+
+✏️ Edit Task
+PATCH /tasks/:id
+
+🗑 Delete Task
+DELETE /tasks/:id
+
+🧠 Architecture & Design Rationale
+Why NestJS?
+
+Built-in support for Guards, Decorators, Pipes → perfect for RBAC
+
+Modular structure keeps concerns separated
+
+Easy to enforce security at multiple layers
+
+Why Angular?
+
+Strong TypeScript ecosystem
+
+Clear separation of services, routing, and UI components
+
+HttpClient + interceptors simplify authenticated API calls
+
+Why SQLite?
+
+Zero setup, perfect for local dev
+
+Easily swappable with PostgreSQL for production
+
+Fast and lightweight
+
+Why Guards & Service-Level Checks?
+
+To satisfy TurboVets’ requirements:
+
+Prevent UI bypass
+
+Enforce secure access control
+
+Ensure consistent RBAC across controllers & services
+
+Why Organization ID Everywhere?
+
+It enables:
+
+Data isolation
+
+Clean multi-tenant structure
+
+Prevents cross-org visibility
+
+🔄 Example Workflows (HARD REQUIREMENT)
+Login & Task Fetch
+
+User logs in
+
+JWT stored in localStorage
+
+Interceptor attaches token
+
+Backend returns tasks for that user’s org
+
+Create Task
+
+User submits form
+
+Backend attaches org + user
+
+Task appears in filtered list
+
+Viewer Attempting Modification
+
+Viewer logs in
+
+Viewer tries PATCH or DELETE
+
+Backend responds with 403 Forbidden
+
+UI hides edit/delete buttons
+
+Add User
+
+Owner creates new user with chosen role
+
+User belongs to same org
+
+New user immediately inherits correct permissions
+
+🕵️ Audit Logging
+
+System logs store:
+
+userId
+
+action
+
+resourceType
+
+resourceId
+
+timestamp
+
+Used for:
+
+Debugging
+
+Security auditing
+
+Compliance
+
+📹 Video Walkthrough
+
+Link:
+https://drive.google.com/file/d/1M7J1HXoj3hId_S8acjxcYlUIl7zAgxul/view?usp=sharing
+
+Covers:
+
+Auth
+
+RBAC
+
+Organization scoping
+
+Viewer restrictions
+
+Guards + service checks
+
+Architecture reasoning
+
+Future improvements
 
 💡 Future Improvements
 
-Refresh token strategy
+Refresh token rotation
 
-CSRF protection for browser environments
+Stronger CSRF protection
 
-Redis-based permission caching
+Redis caching for permissions
 
-Custom role creation per organization
+Dynamic/custom role creation
 
-Activity dashboards & analytics
+Audit log dashboard
 
 Drag-and-drop Kanban board
 
-Full test coverage
+Complete end-to-end test coverage
 
 👩‍💻 Author
 
 Varsha Chandrahasareddy Mulangi
-Email: varshamulangi21@gmail.com
+📧 varshamulangi21@gmail.com
