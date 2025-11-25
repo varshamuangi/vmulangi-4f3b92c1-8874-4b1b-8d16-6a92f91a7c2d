@@ -82,9 +82,14 @@ export class AuthService {
    * Check user roles easily
    */
   hasRole(roles: string[]): boolean {
-    const user = this.currentUser();
-    return user ? roles.includes(user.role) : false;
-  }
+  const user = this.currentUser();               
+  const userRole = user?.role?.toLowerCase() ?? '';
+
+  const allowedRoles = roles.map(r => r.toLowerCase());
+
+  return allowedRoles.includes(userRole);
+}
+
 
   getUserDisplayName(): string {
     const u = this.currentUser();

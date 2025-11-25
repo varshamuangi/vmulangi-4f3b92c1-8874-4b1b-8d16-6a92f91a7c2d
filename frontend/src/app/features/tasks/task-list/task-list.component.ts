@@ -194,6 +194,12 @@ export class TaskListComponent implements OnInit {
     }
   }
 
+  onDeleteClick(task: Task, event: Event) {
+  event.stopPropagation();  // prevents modal from opening
+  this.deleteTask(task);
+}
+
+
   updateTaskStatus(task: Task, status: TaskStatus, event?: Event): void {
     if (event) {
       event.stopPropagation();

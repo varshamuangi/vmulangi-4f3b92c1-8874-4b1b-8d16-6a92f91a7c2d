@@ -1,3 +1,3 @@
-SELECT * FROM users;
-SELECT * FROM organizations;
+delete FROM users;
+delete FROM organizations;
 
